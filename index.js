@@ -25,6 +25,16 @@ client.on("ready", () => {
     console.log(`${client.user.tag}에 로그인하였습니다!`)
 })
 
+const filePath = "https://gmdong.s3.ap-northeast-2.amazonaws.com/gmdong/20170507_125418.jpg"
+const file = new Discord.MessageAttachment(filePath)
+
+const exampleEmbed = {
+	title: '내 사진이다냥',
+	image: {
+		url: 'attachment://' + filePath,
+	},
+}
+
 cuteMessage = (text) => {
     if (text.includes("안녕")) {
         return "돌아왔다냥 ミ๏ｖ๏彡 :cat2:"
@@ -34,9 +44,6 @@ cuteMessage = (text) => {
     }
     if (text.includes("금동")) {
         return "불렀냥?"
-    }
-    if (text.includes("사진")) {
-        return "https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile7.uf.tistory.com%2Fimage%2F24283C3858F778CA2EFABE"
     }
     return false
 }
@@ -63,6 +70,10 @@ client.on("message", msg => {
         const returnMsg = cuteMessage(msg.content)
         if (returnMsg) {
             msg.reply(returnMsg)
+        }
+        if (msg.content.includes("사진")) {
+            console.log('hello')
+            msg.reply({ files: [file], embed: exampleEmbed })
         }
     }
 })
