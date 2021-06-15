@@ -1,16 +1,21 @@
-// const { Command } = require('discord.js-commando');
 
-// module.exports = class MeowCommand extends Command {
-// 	constructor(client) {
-// 		super(client, {
-// 			name: 'meow',
-// 			group: 'first',
-// 			memberName: 'meow',
-// 			description: 'Replies with a meow, kitty cat.',
-// 		});
-// 	}
+const config = require('./config.json')
 
-// 	run(message) {
-// 		return message.say('Meow!');
-// 	}
-// }
+const filePath = `https://${config.bucket}.s3.${config.region}.amazonaws.com/${config.instance}/20170507_125418.jpg`
+
+const file = new Discord.MessageAttachment(filePath)
+
+const exampleEmbed = {
+	title: '내 사진이다냥',
+	image: {
+		url: 'attachment://' + filePath,
+	},
+}
+
+module.exports = {
+	name: '사진',
+	description: 'Photo',
+	execute(message, args) {
+		message.channel.send({ files: [file], embed: exampleEmbed })
+	},
+}

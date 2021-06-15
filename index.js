@@ -25,16 +25,6 @@ client.on("ready", () => {
     console.log(`${client.user.tag}에 로그인하였습니다!`)
 })
 
-const filePath = "https://gmdong.s3.ap-northeast-2.amazonaws.com/gmdong/20170507_125418.jpg"
-const file = new Discord.MessageAttachment(filePath)
-
-const exampleEmbed = {
-	title: '내 사진이다냥',
-	image: {
-		url: 'attachment://' + filePath,
-	},
-}
-
 cuteMessage = (text) => {
     if (text.includes("안녕")) {
         return "돌아왔다냥 ミ๏ｖ๏彡 :cat2:"
@@ -70,10 +60,6 @@ client.on("message", msg => {
         const returnMsg = cuteMessage(msg.content)
         if (returnMsg) {
             msg.reply(returnMsg)
-        }
-        if (msg.content.includes("사진")) {
-            console.log('hello')
-            msg.reply({ files: [file], embed: exampleEmbed })
         }
     }
 })
