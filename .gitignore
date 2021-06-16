@@ -3,7 +3,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,visualstudiocode
 
 ## SECRET ##
-config.json
+secret_config.json
 
 ### Node ###
 # Logs
