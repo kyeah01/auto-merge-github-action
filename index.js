@@ -2,7 +2,7 @@ const Discord = require("discord.js")
 const fs = require('fs');
 
 const { token } = require('./secret_config.json')
-const { prefix } = require('./config.json')
+const config = require('./config.json')
 
 const client = new Discord.Client()
 
@@ -40,9 +40,9 @@ cuteMessage = (text) => {
 }
 
 client.on('message', message => {
-	if (!message.content.startsWith(prefix) || message.author.bot) return
+	if (!message.content.startsWith(config.prefix) || message.author.bot) return
 
-	const args = message.content.slice(prefix.length).trim().split(/ +/)
+	const args = message.content.slice(config.prefix.length).trim().split(/ +/)
 	const command = args.shift().toLowerCase()
 
 	if (!client.commands.has(command)) return

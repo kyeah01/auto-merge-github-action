@@ -1,21 +1,27 @@
+const config = require('../config.json')
 
-const config = require('./config.json')
+const Discord = require('discord.js')
 
-const filePath = `https://${config.bucket}.s3.${config.region}.amazonaws.com/${config.instance}/20170507_125418.jpg`
+const AWS = require('aws-sdk')
 
-const file = new Discord.MessageAttachment(filePath)
+const s3 = new AWS.S3()
 
-const exampleEmbed = {
-	title: '내 사진이다냥',
-	image: {
-		url: 'attachment://' + filePath,
-	},
-}
+const myBucket = config.s3_bucket
+
+const myKey = 'myBucketKey'
+
+const filePath = `https://${config.s3_bucket}.s3.${config.region}.amazonaws.com/${config.instance}/20170507_125418.jpg`
+
+const exampleEmbed = new Discord.MessageEmbed()
+	.setTitle('내사진이다냥!')
+	.setImage(filePath)
 
 module.exports = {
-	name: '사진',
-	description: 'Photo',
-	execute(message, args) {
-		message.channel.send({ files: [file], embed: exampleEmbed })
-	},
+    name: '사진',
+    description: 'Photo',
+    execute(message, args) {
+        message.channel.send(
+            exampleEmbed
+        )
+    },
 }
