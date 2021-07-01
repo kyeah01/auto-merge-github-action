@@ -1,7 +1,12 @@
 const AWS = require('aws-sdk')
 const config = require('./config.json')
+const secret_config = require('./secret_config.json')
 
-const credentials = new AWS.SharedIniFileCredentials({profile: 'gmdong'});
+const credentials = new AWS.Credentials({
+    accessKeyId     : secret_config.accessKeyId,
+    secretAccessKey : secret_config.secretAccessKey
+})
+
 AWS.config.credentials = credentials
 
 AWS.config.update({
@@ -14,10 +19,16 @@ const params = {
     Bucket: config.s3_bucket,
 }
 
-const s3ObjectList = s3.listObjects(params, (err, data) => {
+var photos = []
+
+const s3Object = s3.listObjects(params, (err, data) => {
     if (err) {
         return console.log(err, err.stack)
     }
-    const randomIndex = Math.floor(Math.random() * data.Contents.length)
-    return data.Contents[randomIndex].Key
+    photos = data.Contents
 })
+
+const randomPhotoInS3 = (photos) => {
+    const randomIndex = Math.floor(Math.random() * photos)
+    const randomPhoto = photos[randomIndex].Key
+}
