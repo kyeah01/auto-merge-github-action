@@ -1,7 +1,6 @@
 const Discord = require("discord.js")
 const fs = require('fs');
 
-const { token } = require('./secret_config.json')
 const config = require('./config.json')
 
 const client = new Discord.Client()
@@ -65,4 +64,4 @@ client.on("message", msg => {
     }
 })
 
-client.login(token)
+client.login(process.env.TOKEN)
