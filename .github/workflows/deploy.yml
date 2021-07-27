@@ -31,5 +31,5 @@ jobs:
       run: npm ci
 
     - name: Deploy 🚀
-      run: echo "TOKEN=$TOKEN |
-          node index.js"
+      run: echo "TOKEN=${{ secrets.TOKEN }} |
+          node index.js
