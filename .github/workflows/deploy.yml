@@ -30,5 +30,20 @@ jobs:
     - name: Install dependencies 👨🏻‍💻
       run: npm ci
 
-    - name: Deploy 🚀
-      run: TOKEN=${{ secrets.TOKEN }} node index.js
+    # - name: Deploy 🚀
+    #   run: echo "TOKEN=${{ secrets.TOKEN }} node index.js"
+
+    - name: Login to Heroku Container registry
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:login
+
+    # - name: Build and push
+    #   env:
+    #     HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+    #   run: heroku container:push -a appname web
+
+    # - name: Release
+    #   env:
+    #     HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+    #   run: heroku container:release -a appname web

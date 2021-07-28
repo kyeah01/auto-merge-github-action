@@ -26,13 +26,16 @@ client.on("ready", () => {
 })
 
 cuteMessage = (text) => {
-    if (text.includes("안녕")) {
-        return "돌아왔다냥 ミ๏ｖ๏彡 :cat2:"
-    }
-    if (cuteReact.some(el => text.includes(el))) {
-        return "세상에서 젤 귀여운 건 바로 나다냥 😼"
-    }
     if (text.includes("금동")) {
+        if (text.includes("안녕")) {
+            return "돌아왔다냥 ミ๏ｖ๏彡 :cat2:"
+        }
+        if (cuteReact.some(el => text.includes(el))) {
+            return "세상에서 젤 귀여운 건 바로 나다냥 😼"
+        }
+        if (text.startsWith(config.prefix)) {
+            return false
+        }
         return "불렀냥?"
     }
     return false
