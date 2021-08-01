@@ -21,6 +21,6 @@ module.exports = {
             .setTitle('내사진이다냥!')
             .attachFiles([photoFolderPath + '/' + randomPhoto])
 
-            message.channel.send(photoEmbed)
+        message.channel.send(photoEmbed)
     },
 }

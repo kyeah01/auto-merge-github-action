@@ -13,17 +13,21 @@ module.exports = {
 	execute(message, args) {
     const summonerName = args.join('')
 
-    axios.get(SUMMONER_API + encodeURI(summonerName), {
-      params: {
-        api_key: process.env.RIOT_API
-      }
-    }).then((res) => {
+    try {
+      userInfo = async () => await axios.get(SUMMONER_API + encodeURI(summonerName), {
+        params: {
+          api_key: process.env.RIOT_DEV_API
+        }
+      })
+      const res = userInfo()
       if (res.status == 200) {
         console.log(res.data)
+        message.channel.send(`${summonerName} 등록완료했다냥~ :cat:`)
+      } else {
+        throw 'riot api error'
       }
-      console.log('ERROR')
-    })
-
-    message.channel.send(summonerName)
+    } catch (error) {
+      message.channel.send('소환사 등록에 실패했다냥 😿')
+    }
 	},
 }

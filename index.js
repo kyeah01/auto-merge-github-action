@@ -26,6 +26,9 @@ client.on("ready", () => {
 })
 
 cuteMessage = (text) => {
+    if (text.startsWith(config.prefix)) {
+        return false
+    }
     if (text.includes("금동")) {
         if (text.includes("안녕")) {
             return "돌아왔다냥 ミ๏ｖ๏彡 :cat2:"
@@ -33,8 +36,8 @@ cuteMessage = (text) => {
         if (cuteReact.some(el => text.includes(el))) {
             return "세상에서 젤 귀여운 건 바로 나다냥 😼"
         }
-        if (text.startsWith(config.prefix)) {
-            return false
+        if (text.includes("나빠") || text.includes("나쁜")) {
+            return "방금 금동이보고 나쁘다고 했냥?\n아니다냥! :pouting_cat:"
         }
         return "불렀냥?"
     }
