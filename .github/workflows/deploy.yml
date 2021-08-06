@@ -22,21 +22,24 @@ jobs:
     - name: Checkout 🛎
       uses: actions/checkout@v2
 
-    - name: Setup node env 🏗
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node }}
+    # - name: Setup node env 🏗
+    #   uses: actions/setup-node@v2
+    #   with:
+    #     node-version: ${{ matrix.node }}
 
-    - name: Install dependencies 👨🏻‍💻
-      run: npm ci
+    # - name: Install dependencies 👨🏻‍💻
+    #   run: npm ci
+
+    # - name: SSH connect 💻
+    #   run: ssh -p ${{ secrets.PORT }} {{ secrets.ID }}@{{ secrets.SERVER_IP }}
 
     # - name: Deploy 🚀
     #   run: echo "TOKEN=${{ secrets.TOKEN }} node index.js"
 
-    - name: Login to Heroku Container registry
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku container:login
+    # - name: Login to Heroku Container registry
+    #   env:
+    #     HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+    #   run: heroku container:login
 
     # - name: Build and push
     #   env:

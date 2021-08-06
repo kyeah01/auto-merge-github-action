@@ -25,19 +25,20 @@ client.on("ready", () => {
     console.log(`${client.user.tag}에 로그인하였습니다!`)
 })
 
-cuteMessage = (text) => {
-    if (text.startsWith(config.prefix)) {
-        return false
-    }
-    if (text.includes("금동")) {
+cuteMessage = (text, mentions) => {
+    if (mentions.has(client.user)) {
+        console.log(mentions, client.user)
         if (text.includes("안녕")) {
-            return "돌아왔다냥 ミ๏ｖ๏彡 :cat2:"
+            return "돌아왔냥 ミ๏ｖ๏彡 :cat2:"
         }
         if (cuteReact.some(el => text.includes(el))) {
             return "세상에서 젤 귀여운 건 바로 나다냥 😼"
         }
         if (text.includes("나빠") || text.includes("나쁜")) {
             return "방금 금동이보고 나쁘다고 했냥?\n아니다냥! :pouting_cat:"
+        }
+        if (text.includes('잘자') || text.includes('굿밤') || text.includes('구빰')) {
+            return "잘자라냥 🌛"
         }
         return "불렀냥?"
     }
@@ -63,7 +64,7 @@ client.on('message', message => {
 
 client.on("message", msg => {
     if (!msg.author.bot) {
-        const returnMsg = cuteMessage(msg.content)
+        const returnMsg = cuteMessage(msg.content, msg.mentions)
         if (returnMsg) {
             msg.reply(returnMsg)
         }
