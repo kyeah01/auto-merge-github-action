@@ -17,18 +17,21 @@ module.exports = {
 
     if (!voiceChannel) {
       return message.channel.send(
-        "사람들이 아무도 채널이 없다옹 "
+        "채널에 사람들이 아무도 없다옹 🐈"
       )
     }
 
-    const stream = ytdl('https://www.youtube.com/watch?v=kpZFY-bJY3g', { filter: 'audioonly' })
-
-    const resource = createAudioResource(stream, { inputType: StreamType.Arbitrary })
+    const stream = ytdl('https://www.youtube.com/watch?v=kpZFY-bJY3g', {
+      filter: 'audioonly',
+    })
 
     const voice = await voiceChannel.join()
 
     const dispatcher = voice
       .play(stream)
       .on("error", error => console.error(error))
+
+      message.channel.send(`밴픽브금 OOOOOOOOOOOOON!`)
+
   },
 }
