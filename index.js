@@ -1,13 +1,12 @@
+const fs = require('fs')
 const Discord = require("discord.js")
-const fs = require('fs');
 
 const config = require('./config.json')
 
 const client = new Discord.Client()
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
 
-client.commands = new Discord.Collection();
-
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+client.commands = new Discord.Collection()
 
 const cuteReact = [
     '귀여',
@@ -17,8 +16,8 @@ const cuteReact = [
 ]
 
 for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-	client.commands.set(command.name, command);
+	const command = require(`./commands/${file}`)
+	client.commands.set(command.name, command)
 }
 
 client.on("ready", () => {
@@ -26,19 +25,25 @@ client.on("ready", () => {
 })
 
 cuteMessage = (text, mentions) => {
+    const someEmoji = client.emojis.cache.get("892711207696470036");
+    console.log(someEmoji)
+
     if (mentions.has(client.user)) {
         console.log(mentions, client.user)
         if (text.includes("안녕")) {
             return "돌아왔냥 ミ๏ｖ๏彡 :cat2:"
         }
         if (cuteReact.some(el => text.includes(el))) {
-            return "세상에서 젤 귀여운 건 바로 나다냥 😼"
+            return `세상에서 젤 귀여운 건 바로 나다냥 :_3:892711207696470036:`
         }
         if (text.includes("나빠") || text.includes("나쁜")) {
-            return "방금 금동이보고 나쁘다고 했냥?\n아니다냥! :pouting_cat:"
+            return "방금 금동이보고 나쁘다고 했냥? :4_:"
         }
         if (text.includes('잘자') || text.includes('굿밤') || text.includes('구빰')) {
-            return "잘자라냥 🌛"
+            return "잘자라냥 :2_:"
+        }
+        if (text.includes('우울')) {
+            return "괜찮다냥~ \n 금동이가 옆에 있어주겠다냥"
         }
         return "불렀냥?"
     }
@@ -56,14 +61,15 @@ client.on('message', message => {
 	try {
 		client.commands.get(command).execute(message, args)
 	} catch (error) {
-		console.error(error);
+		console.error(error)
 		message.reply('뭐...뭔가가 잘못됐다냥 😿')
 	}
-});
+})
 
 
 client.on("message", msg => {
     if (!msg.author.bot) {
+        console.log(msg.author.username)
         const returnMsg = cuteMessage(msg.content, msg.mentions)
         if (returnMsg) {
             msg.reply(returnMsg)
@@ -71,6 +77,6 @@ client.on("message", msg => {
     }
 })
 
-// client.on('debug', console.log)
+client.on('debug', console.log)
 
 client.login(process.env.TOKEN)

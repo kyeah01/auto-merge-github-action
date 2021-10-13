@@ -1,6 +1,3 @@
 {
-    "prefix"    : "/",
-    "s3_bucket" : "gmdong",
-    "region"    : "ap-northeast-2",
-    "instance"  : "gmdong"
+    "prefix"    : "/"
 }

@@ -2,6 +2,8 @@ const axios = require('axios')
 
 const SUMMONER_API = 'https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/'
 
+const { Summoners } = require('../db.js')
+
 module.exports = {
 	name: '소환사등록',
 	description: `
@@ -16,16 +18,30 @@ module.exports = {
     try {
       userInfo = async () => await axios.get(SUMMONER_API + encodeURI(summonerName), {
         params: {
-          api_key: process.env.RIOT_DEV_API
+          api_key: process.env.API_KEY
         }
       })
       const res = userInfo()
-      if (res.status == 200) {
-        console.log(res.data)
-        message.channel.send(`${summonerName} 등록완료했다냥~ :cat:`)
-      } else {
-        throw 'riot api error'
-      }
+        .then(async (res) => {
+          if (res.status == 200) {
+            try {
+              const summoner = await Summoners.create({
+                user_name : res.data.name,
+                pu_uid : res.data.puuid
+              })
+              message.channel.send(`${summonerName} 등록완료했다냥~ :cat:`)
+            }
+            catch (error) {
+              if (error.name === 'SequelizeUniqueConstraintError') {
+                return message.channel.send('이미 등록된 소환사다냥 😿')
+              }
+              return message.channel.send('Something went wrong with adding a summoner name.');
+            }
+            const summonerList = await Summoners.findAll()
+          } else {
+            return message.channel.send('금동이는 잘못한거 없는데 라이엇이 잘못햇다냥!!! 😾')
+          }
+        })
     } catch (error) {
       message.channel.send('소환사 등록에 실패했다냥 😿')
     }
