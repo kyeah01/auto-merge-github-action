@@ -1,4 +1,3 @@
-const { Summoners } = require('../db.js')
 
 module.exports = {
 	name: '오늘의금동이',

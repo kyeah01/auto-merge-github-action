@@ -25,11 +25,7 @@ client.on("ready", () => {
 })
 
 cuteMessage = (text, mentions) => {
-    const someEmoji = client.emojis.cache.get("892711207696470036");
-    console.log(someEmoji)
-
     if (mentions.has(client.user)) {
-        console.log(mentions, client.user)
         if (text.includes("안녕")) {
             return "돌아왔냥 ミ๏ｖ๏彡 :cat2:"
         }
@@ -69,7 +65,6 @@ client.on('message', message => {
 
 client.on("message", msg => {
     if (!msg.author.bot) {
-        console.log(msg.author.username)
         const returnMsg = cuteMessage(msg.content, msg.mentions)
         if (returnMsg) {
             msg.reply(returnMsg)

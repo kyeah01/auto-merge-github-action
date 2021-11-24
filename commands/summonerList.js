@@ -1,4 +1,4 @@
-const { Summoners } = require('../db.js')
+const { user } = require('../db/user.js')
 
 module.exports = {
 	name: '소환사목록',
@@ -9,13 +9,13 @@ module.exports = {
     `,
   execute(message, args) {
     try {
-      const summonerList = async () => await Summoners.findAll()
-      summonerList().then(res =>{
-        const user_names = res.map(s => s.user_name).join(', ')
-        return message.channel.send(`내 친구들은 총 ${res.length}명이고, \n ${user_names}다냥`)
-      })
+      const count = user.get_count()
+      const names = Object.entries(user.get_list()).map(([name]) => {
+        return name
+      }).join(', ')
+      return message.channel.send(`내 친구들은 총 ${count}명이고, \n${names}다냥`)
     } catch (error) {
-      message.channel.send('소환사 등록에 실패했다냥 😿')
+      message.channel.send('소환사목록 조회에 실패했다냥 😿')
     }
 	},
 }
