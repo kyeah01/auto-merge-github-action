@@ -5,6 +5,9 @@
 ## STATIC ##
 static
 
+## DATA ##
+data/
+
 ## SECRET ##
 secret_config.json
 
