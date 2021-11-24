@@ -2,7 +2,7 @@ const Discord = require("discord.js")
 const axios = require('axios')
 
 const { user } = require('../db/user.js')
-const { SUMMONER_API } = require('../config.json') 
+const { SUMMONER_API } = require('../config.json')
 
 module.exports = {
 	name: '소환사등록',
@@ -39,8 +39,9 @@ module.exports = {
       }
 
       // TODO : collected 는 array가 아니라서 이렇게 호출을 할 수 없음
-      const summonerName = collected[0].content
-      const originSummonerName = collected[1].content
+      console.log(collected.first())
+      console.log(collected.first())
+      const [summonerName, originSummonerName] = collected.map((el) => el.content)
 
       axios.get(SUMMONER_API + encodeURI(summonerName), {
         params: {
