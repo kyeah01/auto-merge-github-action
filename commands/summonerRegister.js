@@ -12,6 +12,15 @@ module.exports = {
     작동이 되지 않는다면, API 유효기간이 만료된 거니 갈비에게 문의하라냥!
 	`,
 	execute(message, args) {
+    const auth_roles = [ '377826923901878272', '893178829571514438' ]
+    console.log(message.author)
+    console.log('*************', message.member.guild.me)
+    // if (message.member.guild.me.hasPermission("MANAGE_WEBHOOKS", "ADMINISTRATOR"))
+
+    if (!message.member._roles.some((el) => auth_roles.includes(el))) {
+      return message.reply("금동이의 친구가 되고싶다면 금동이네형에게 문의해보자냥! 😻")
+    }
+
     const questions = [
       "소환사명이 뭐냥?",
       "방금 알려준 소환사명의 본캐 소환사명을 알려달라냥~"
@@ -38,9 +47,6 @@ module.exports = {
         return message.reply("이상하다냥? 답변 갯수가 모자란 것 같다냥 🙀")
       }
 
-      // TODO : collected 는 array가 아니라서 이렇게 호출을 할 수 없음
-      console.log(collected.first())
-      console.log(collected.first())
       const [summonerName, originSummonerName] = collected.map((el) => el.content)
 
       axios.get(SUMMONER_API + encodeURI(summonerName), {
@@ -50,6 +56,7 @@ module.exports = {
       }).then((res) => {
         if (res.status == 200) {
           try {
+            console.log(originSummonerName, summonerName, res.data)
             user.create(
               originSummonerName, summonerName, res.data
             )

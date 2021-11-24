@@ -23,18 +23,14 @@ user.prototype.get_list = function () {
   return this.data
 }
 
-user.prototype.create = function (originName, name, info) {
+user.prototype.create = function (originalName, name, info) {
+  // TODO : 일정 시간이 경과되어야만 리셋되게 해주기
+  info['originalName'] = originalName
+  info['registeredDate'] = Date.now()
+  this.data[name] = info
   const summoner = this.get_object_by_summoner_name(name)
 
-  if (summoner != undefined) {
-    if (info == this.data[name]) {
-      info['originalName'] = originalName
-      this.data[name] = info
-      this.summoner_matches[info[puuid]] = []
-      fs.writeFileSync(path.summoner_match, JSON.stringify(this.summoner_matches), console.log)
-      fs.writeFileSync(path.user, JSON.stringify(this.data), console.log)
-    }
-  }
+  fs.writeFileSync(path.user, JSON.stringify(this.data), console.log)
 }
 
 user.prototype.update_matches = function (puuid, match_id) {
