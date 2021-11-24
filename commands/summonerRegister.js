@@ -13,9 +13,6 @@ module.exports = {
 	`,
 	execute(message, args) {
     const auth_roles = [ '377826923901878272', '893178829571514438' ]
-    console.log(message.author)
-    console.log('*************', message.member.guild.me)
-    // if (message.member.guild.me.hasPermission("MANAGE_WEBHOOKS", "ADMINISTRATOR"))
 
     if (!message.member._roles.some((el) => auth_roles.includes(el))) {
       return message.reply("금동이의 친구가 되고싶다면 금동이네형에게 문의해보자냥! 😻")
@@ -49,6 +46,8 @@ module.exports = {
 
       const [summonerName, originSummonerName] = collected.map((el) => el.content)
 
+
+
       axios.get(SUMMONER_API + encodeURI(summonerName), {
         params: {
           api_key: process.env.API_KEY
@@ -56,9 +55,17 @@ module.exports = {
       }).then((res) => {
         if (res.status == 200) {
           try {
-            console.log(originSummonerName, summonerName, res.data)
+            var original_summoner_info = res.data
+            // TODO: original 아이디 구분을 puuuid로 할수있게 해줘야함
+            if (summonerName != originSummonerName) {
+              original_summoner_info = user.get_object_by_summoner_name(originSummonerName)
+              console.log(original_summoner_info)
+              if (original_summoner_info == undefined) {
+                return message.channel.send("본캐를 먼저 등록해달라냥 🐱")
+              }
+            }
             user.create(
-              originSummonerName, summonerName, res.data
+              original_summoner_info['puuid'], summonerName, res.data
             )
             return message.channel.send(`${summonerName} 등록완료했다냥~ :cat:`)
           } catch (err) {

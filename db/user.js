@@ -23,12 +23,11 @@ user.prototype.get_list = function () {
   return this.data
 }
 
-user.prototype.create = function (originalName, name, info) {
+user.prototype.create = function (originalPuuid, name, info) {
   // TODO : 일정 시간이 경과되어야만 리셋되게 해주기
-  info['originalName'] = originalName
+  info['originalPuuid'] = originalPuuid
   info['registeredDate'] = Date.now()
   this.data[name] = info
-  const summoner = this.get_object_by_summoner_name(name)
 
   fs.writeFileSync(path.user, JSON.stringify(this.data), console.log)
 }
