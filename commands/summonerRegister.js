@@ -12,7 +12,6 @@ module.exports = {
     작동이 되지 않는다면, API 유효기간이 만료된 거니 갈비에게 문의하라냥!
 	`,
 	execute(message, args) {
-    console.log(message.member._roles)
     const auth_roles = ['894174809448120320', '819988654818328629', '377826923901878272', '893178829571514438' ]
 
     if (!message.member._roles.some((el) => auth_roles.includes(el))) {
@@ -46,8 +45,6 @@ module.exports = {
       }
 
       const [summonerName, originSummonerName] = collected.map((el) => el.content)
-
-
 
       axios.get(SUMMONER_API + encodeURI(summonerName), {
         params: {

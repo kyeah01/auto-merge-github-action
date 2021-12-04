@@ -1,1 +1,1 @@
-# auto merge cron job by github actions
+# riot discord bot
